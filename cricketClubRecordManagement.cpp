@@ -13,37 +13,39 @@ using namespace std;
 
 // --------------------------------------------
 // globall arrays or variable
-
 long long int id[50] = {
-    201, 202, 203, 204, 205, 206, 207, 208, 209, 210},
-              fee[50] = {4500, 5200, 3900, 6100, 4700, 5000, 4300, 4800, 5500, 4950};
+    201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222},
+              fee[50] = {4500, 5200, 3900, 6100, 4700, 5000, 4300, 4800, 5500, 4950, 5100, 4400, 5800, 4900, 6300, 4200, 5400, 6000, 4750, 5300, 3425, 3422};
 
 string playerName[50] = {
     "Nabeel", "Shahzad", "Talha", "Rehan", "Sufyan",
-    "Ahmed", "Usman", "Bilal", "Ahsan", "Farhan"};
+    "Ahmed", "Usman", "Bilal", "Ahsan", "Farhan", "Omar", "Yasir", "Taha", "Daniyal", "Waqas",
+    "Ali", "Hamza", "Zain", "Kamran", "Hasan", "Ahsan", "Quraish"};
 
 string fatherName[50] = {
     "Yaseen", "Hameed", "Rafiq", "Abid", "Noman",
-    "Sami", "Imran", "Javed", "Aslam", "Tariq"};
+    "Sami", "Imran", "Javed", "Aslam", "Tariq", "Iqbal", "Qasim", "Latif", "Sajjad", "Rashid",
+    "Zafar", "Faisal", "Nasir", "Sarwar", "Anwar", "Zahid", "Qasim"};
 
 string cnic[50] = {
     "3520187654321", "3520199998888", "3120176543210", "4210188887777", "3450112345678",
-    "4210198765432", "3310112345678", "4220187654321", "3450123456789", "3120165432109"};
+    "4210198765432", "3310112345678", "4220187654321", "3450123456789", "3120165432109", "3740156789012", "4520123456789", "3110198765432", "3520111112222", "4230133334444",
+    "3340155556666", "3120177778888", "3510199990000", "4240112121212", "3410134343434", "4123454657456", "2304542678901"};
 
-int playerMatch[50] = {10, 5, 12, 8, 15, 3, 7, 10, 4, 6},
-    fifties[50] = {2, 0, 3, 0, 4, 0, 1, 1, 0, 0},
-    centuries[50] = {0, 1, 0, 0, 2, 0, 0, 1, 0, 0},
-    ballFaced[50] = {180, 150, 240, 60, 300, 50, 120, 190, 10, 95},
-    sixes[50] = {5, 8, 10, 2, 15, 1, 4, 7, 0, 3},
-    fours[50] = {18, 15, 25, 5, 35, 4, 12, 20, 1, 8},
-    dismissles[50] = {8, 3, 11, 5, 12, 2, 6, 9, 1, 4},
-    runs[50] = {250, 320, 410, 70, 600, 55, 160, 300, 15, 100};
-float strikeRate[50] = {138.89, 213.33, 170.83, 116.67, 200.00, 110.00, 133.33, 157.89, 150.00, 105.26}, average[50] = {31.25, 106.67, 37.27, 14.00, 50.00, 27.50, 26.67, 33.33, 15.00, 25.00};
+int playerMatch[50] = {10, 5, 12, 8, 15, 3, 7, 10, 4, 6, 18, 6, 14, 9, 20, 5, 11, 13, 7, 16, 3, 45},
+    fifties[50] = {2, 0, 3, 0, 4, 0, 1, 1, 0, 0, 5, 0, 3, 0, 8, 0, 2, 2, 0, 45, 23},
+    centuries[50] = {0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 3, 0, 0, 1, 0, 0, 3, 2},
+    ballFaced[50] = {180, 150, 240, 60, 300, 50, 120, 190, 10, 95, 350, 50, 325, 114, 568, 40, 280, 320, 84, 464, 500, 344},
+    sixes[50] = {5, 8, 10, 2, 15, 1, 4, 7, 0, 3, 12, 1, 15, 4, 25, 0, 8, 10, 3, 11, 30, 23},
+    fours[50] = {18, 15, 25, 5, 35, 4, 12, 20, 1, 8, 30, 6, 40, 10, 50, 3, 20, 28, 7, 35, 43, 21},
+    dismissles[50] = {8, 3, 11, 5, 12, 2, 6, 9, 1, 4, 16, 4, 10, 8, 18, 3, 7, 12, 6, 15, 345, 678},
+    runs[50] = {250, 320, 410, 70, 600, 55, 160, 300, 15, 100, 750, 45, 520, 120, 1050, 30, 350, 480, 80, 650, 342, 456};
+float strikeRate[50] = {138.89, 213.33, 170.83, 116.67, 200.00, 110.00, 133.33, 157.89, 150.00, 105.26, 214.29, 90.00, 160.00, 105.26, 184.86, 75.00, 125.00, 150.00, 95.24, 140.00, 109.90, 134.00}, average[50] = {31.25, 106.67, 37.27, 14.00, 50.00, 27.50, 26.67, 33.33, 15.00, 25.00, 46.88, 11.25, 52.00, 15.00, 58.33, 10.00, 50.00, 40.00, 13.33, 43.33, 55.11, 34.00};
 
-int idx = 10, team1[50], team2[50], team3[50], team4[50], teamCount1 = 0, teamCount2 = 0, teamCount3 = 0, teamCount4 = 0;
+int idx = 20, team1[50] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, team2[50] = {12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22}, team3[50], team4[50], teamCount1 = 11, teamCount2 = 11, teamCount3 = 0, teamCount4 = 0;
 
 // Team Name variable
-string teamNames[4];
+string teamNames[4] = {"Golden", "Silver"};
 
 // arrays to organize matches in cricket clubs
 int matchIndex[50], matchCounter = 0;
@@ -51,7 +53,7 @@ string opponentTeam[50], opposingTeam[50], resultOfMatch[50], matchDate[50];
 
 // --------------------------------------------
 void printMenuHeader(string mainMenu, string subMenu);
-// // ---------------------------------------------------
+// ---------------------------------------------------
 // int menu();
 void printNameIndex();
 void displayTitle();
@@ -63,7 +65,6 @@ bool updateData();
 void searchData();
 long long calculateFee();
 void teamMake();
-void viewTeamMembers();
 int handlePause();
 string numValidation(string userInput);
 string validationForCnic(string userInputCnic);
@@ -92,11 +93,12 @@ void printDataAOrDRuns();
 void viewAdmins();
 void viewUsers();
 void gotoxy(int x, int y);
+bool updateMatch();
 // --------------------------------------------------
 bool SignUp(string uN, string uP, string uR);
 string SignIn(string uN, string uP);
 const int userSize = 50;
-string userNames[userSize] = {"A", "B"};
+string userNames[userSize] = {"Amreeha", "Eman"};
 string userPasswords[userSize] = {"1", "2"};
 string userRoles[userSize] = {"Admin", "User"};
 int userCount = 2;
@@ -203,13 +205,6 @@ void printMenuHeader(string mainMenu, string subMenu)
     string msg = mainMenu + " > " + subMenu;
     cout << msg << endl;
     cout << "------------------------------" << endl;
-}
-void simpleClear()
-{
-    for (int i = 0; i < 50; i++)
-    {
-        cout << "\n"; // Print 50 newlines to push old content off-screen
-    }
 }
 void displayTitle()
 {
@@ -329,6 +324,7 @@ void adminInterface()
         {
             displayTitle();
             cout << "Total fee is : " << calculateFee();
+            handlePause();
         }
         else if (option == 7)
         {
@@ -400,6 +396,7 @@ void adminInterface()
         {
             displayTitle();
             viewMatchHistory();
+            handlePause();
         }
         else if (option == 13)
         {
@@ -411,6 +408,11 @@ void adminInterface()
             cout << "Strike Rate: " << strikeRate[topIndex] << endl;
             cout << "Centuries: " << centuries[topIndex] << endl;
             cout << "Fifties: " << fifties[topIndex] << endl;
+            cout << "Sixes: " << sixes[topIndex] << endl;
+            cout << "Four: " << fours[topIndex] << endl;
+            cout << "Ball Faced: " << ballFaced[topIndex] << endl;
+            cout << "Dissmissles: " << dismissles[topIndex] << endl;
+            handlePause();
         }
         else if (option == 14)
         {
@@ -433,6 +435,18 @@ void adminInterface()
             viewUsers();
         }
         else if (option == 18)
+        {
+            displayTitle();
+            if (updateMatch())
+            {
+                cout << "Match updated successfully.\n";
+            }
+            else
+            {
+                cout << "Match updated unsuccessfully.\n";
+            }
+        }
+        else if (option == 19)
         {
             displayTitle();
             cout << "Exiting Admin Interface.\n";
@@ -513,6 +527,7 @@ void userInterface()
         {
             displayTitle();
             viewMatchHistory();
+            handlePause();
         }
         else if (option == 6)
         {
@@ -592,7 +607,8 @@ int adminMenu()
     cout << "Enter 15 to see player runs in descending order\n";
     cout << "Enter 16 to view all admins\n";
     cout << "Enter 17 to see all users\n";
-    cout << "Enter 18 to exit\n";
+    cout << "Enter 18 to update match result\n";
+    cout << "Enter 19 to exit\n";
     cout << "\n=======================================================\n";
     cout << "Enter your choice: ";
     cin >> tempChoice;
@@ -811,10 +827,19 @@ bool deleteData()
     int indexToDelete = del - 1;
 
     // ... validation check ...
-    if (indexToDelete <= 0 || indexToDelete >= idx)
+    if (indexToDelete < 0 || indexToDelete >= idx)
     {
         cout << "Invalid index! Cannot delete." << endl;
         return false;
+    }
+    for (int i = 0; i < idx; i++)
+    {
+        if (indexToDelete == team1[i])
+        {
+            char choice;
+            cout << "This player is a part of a team ,are you sure you want to delete?(y/n):" << endl;
+            cin >> choice;
+        }
     }
 
     // Shifting elements to fill the gap left by the deleted record
@@ -940,7 +965,6 @@ long long calculateFee()
     return sum;
 }
 void teamMake()
-
 {
     displayTitle();
     string choiceTeamName;
@@ -953,58 +977,87 @@ void teamMake()
         handlePause();
         return;
     }
-    cout << "We have four teams." << endl
-         << "Enter names one by one" << endl;
-    for (int i = 0; i < 4; i++)
-    {
-        cout << "Enter name of team " << i + 1 << ": ";
-        cin >> teamNames[i];
-    }
-    cout << "----------------------------------------------------" << endl;
-    cout << "|                  T E A M S                        |" << endl;
-    cout << "----------------------------------------------------" << endl;
-    cout << std::left;
-    cout << "***********************************" << endl;
-    cout << "|" << setw(10) << "I N D E \t" << "N A M E          |" << endl;
-    cout << "***********************************" << endl;
-    for (int j = 0; j < 4; j++)
-    {
-        cout << "  " << setw(8) << (j + 1) << teamNames[j] << endl;
-    }
+    cout << "We have four teams." << endl;
+    cout << "Team 1 team is: " << teamNames[0] << endl;
+    cout << "Team 2 team is: " << teamNames[1] << endl;
 
-    cout << "Which team you want to select first?";
-    cin >> choiceTeamName;
-    for (int i = 0; i < 4; i++)
+    char tempvar;
+    for (int i = 2; i < 4; i++)
     {
-        if (choiceTeamName == teamNames[i])
+        cout << "Want to make more team?(y/n)" << endl;
+        cin >> tempvar;
+        if (tempvar == 'y')
         {
-            temp = i;
+            cout << "Enter name of team " << i + 1 << ": ";
+            cin >> teamNames[i];
+        }
+        else
+        {
+            cout << "No problem" << endl;
             break;
         }
     }
-    if (temp == 0)
+    cout << " ---------------------------------------------------" << endl;
+    cout << "|                  T E A M S                        |" << endl;
+    cout << " ---------------------------------------------------" << endl;
+    cout << std::left;
+    cout << "***********************************" << endl;
+    cout << "|" << setw(10) << "I N D E \t" << "N A M E         |" << endl;
+    cout << "***********************************" << endl;
+    for (int j = 0; j < 4; j++)
     {
-        teamSelection1();
+        if (teamNames[j] == "")
+            cout << " " << setw(8) << (j + 1) << "NotCreated" << endl;
+        else
+            cout << " " << setw(8) << (j + 1) << teamNames[j] << endl;
     }
-    else if (temp == 1)
+    while (true)
     {
-        teamSelection2();
-    }
-    else if (temp == 2)
-    {
-        teamSelection3();
-    }
-    else if (temp == 3)
-    {
-        teamSelection4();
-    }
-    else
-    {
-        cout << "Invalid input";
-    }
-    handlePause();
-}
+        bool teamFound = false;
+        cout << "Which team you want to select(If you want to quit enter Q)?" << endl;
+        cout << "Enter team Name: ";
+        cin >> choiceTeamName;
 
+        if (choiceTeamName == "Q")
+        {
+            break;
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (choiceTeamName == teamNames[i] && teamNames[i] != "")
+            {
+                temp = i;
+                teamFound = true;
+                break;
+            }
+        }
+
+        if (teamFound)
+        {
+            if (temp == 0)
+            {
+                teamSelection1();
+            }
+            else if (temp == 1)
+            {
+                teamSelection2();
+            }
+            else if (temp == 2)
+            {
+                teamSelection3();
+            }
+            else if (temp == 3)
+            {
+                teamSelection4();
+            }
+        }
+        else
+        {
+            cout << "Invalid input or team not created yet!" << endl;
+        }
+    }
+}
 // to stop a program for a while
 int handlePause()
 {
@@ -1046,7 +1099,7 @@ void printNameIndex()
     for (int i = 0; i < idx; i++)
     {
         // Use setw(10) to ensure the player name always starts in the same column
-        cout << "  " << setw(8) << (i + 1)<<"\t " << playerName[i] << endl;
+        cout << "  " << setw(8) << (i + 1) << "\t " << playerName[i] << endl;
     }
 }
 void teamSelection1()
@@ -1079,7 +1132,7 @@ void teamSelection1()
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
             for (int i = 0; i < teamCount2; i++)
             {
-                if (tempPlayer-1 == team2[i])
+                if (tempPlayer - 1 == team2[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
@@ -1089,7 +1142,7 @@ void teamSelection1()
             }
             for (int i = 0; i < teamCount3; i++)
             {
-                if (tempPlayer-1 == team3[i])
+                if (tempPlayer - 1 == team3[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
@@ -1099,7 +1152,7 @@ void teamSelection1()
             }
             for (int i = 0; i < teamCount4; i++)
             {
-                if (tempPlayer-1 == team4[i])
+                if (tempPlayer - 1 == team4[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
@@ -1162,32 +1215,29 @@ void teamSelection2()
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
             for (int i = 0; i < teamCount1; i++)
             {
-                if (tempPlayer-1 == team1[i])
+                if (tempPlayer - 1 == team1[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
                     handlePause();
-                    return;
                 }
             }
             for (int i = 0; i < teamCount3; i++)
             {
-                if (tempPlayer-1 == team3[i])
+                if (tempPlayer - 1 == team3[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
                     handlePause();
-                    return;
                 }
             }
             for (int i = 0; i < teamCount4; i++)
             {
-                if (tempPlayer-1 == team4[i])
+                if (tempPlayer - 1 == team4[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
                     handlePause();
-                    return;
                 }
             }
 
@@ -1246,7 +1296,7 @@ void teamSelection3()
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
             for (int i = 0; i < teamCount1; i++)
             {
-                if (tempPlayer-1 == team1[i])
+                if (tempPlayer - 1 == team1[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
@@ -1256,7 +1306,7 @@ void teamSelection3()
             }
             for (int i = 0; i < teamCount2; i++)
             {
-                if (tempPlayer-1 == team2[i])
+                if (tempPlayer - 1 == team2[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
@@ -1266,7 +1316,7 @@ void teamSelection3()
             }
             for (int i = 0; i < teamCount4; i++)
             {
-                if (tempPlayer-1 == team4[i])
+                if (tempPlayer - 1 == team4[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
@@ -1328,7 +1378,7 @@ void teamSelection4()
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
             for (int i = 0; i < teamCount1; i++)
             {
-                if (tempPlayer-1 == team1[i])
+                if (tempPlayer - 1 == team1[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
@@ -1338,7 +1388,7 @@ void teamSelection4()
             }
             for (int i = 0; i < teamCount2; i++)
             {
-                if (tempPlayer-1 == team2[i])
+                if (tempPlayer - 1 == team2[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
@@ -1348,7 +1398,7 @@ void teamSelection4()
             }
             for (int i = 0; i < teamCount3; i++)
             {
-                if (tempPlayer-1 == team3[i])
+                if (tempPlayer - 1 == team3[i])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
@@ -1674,7 +1724,26 @@ bool organizeMatch()
     matchCounter++;
     return true;
 }
-
+bool updateMatch()
+{
+    string tempEditMatch;
+    int editMatch;
+    viewMatchHistory();
+    cout << "Enter which match you want to edit?  " << endl;
+    cin >> tempEditMatch;
+    editMatch = stoi(numValidation(tempEditMatch));
+    editMatch = editMatch - 1;
+    for (int i = 0; i < matchCounter; i++)
+    {
+        if (i == editMatch)
+        {
+            cout << "Enter result of match: ";
+            cin >> resultOfMatch[editMatch];
+            return true;
+        }
+    }
+    return false;
+}
 void viewMatchHistory()
 {
     displayTitle();
@@ -1695,7 +1764,7 @@ void viewMatchHistory()
     cout << std::left;
 
     cout << "=================================== MATCH HISTORY ======================================\n";
-    cout << setw(3) << "matchIndex"
+    cout << setw(10) << "matchIndex"
          << setw(16) << "OpponentTeam"
          << setw(16) << "OpposingTeam"
          << setw(16) << "Result"
@@ -1703,14 +1772,13 @@ void viewMatchHistory()
     cout << "---------------------------------------------------------------------------------------\n";
     for (int i = 0; i < matchCounter; i++)
     {
-        cout << setw(3) << (i + 1)
+        cout << setw(10) << (i + 1)
              << setw(16) << opponentTeam[i]
              << setw(16) << opposingTeam[i]
              << setw(16) << resultOfMatch[i]
              << setw(16) << matchDate[i] << endl;
     }
     cout << "---------------------------------------------------------------------------------------\n";
-    handlePause();
 }
 
 void printTeamNames()
@@ -1959,7 +2027,10 @@ void printDataAOrDRuns()
          << setw(12) << "Runs"
          << setw(10) << "Matches"
          << setw(10) << "Average"
+         << setw(10) << "Sixes"
+         << setw(10) << "Fours"
          << setw(12) << "StrikeRate" << endl;
+
     cout << "***************************************************************************************" << endl;
     for (int j = 0; j < idx; j++)
     {
@@ -1968,6 +2039,8 @@ void printDataAOrDRuns()
              << setw(12) << runs[j]
              << setw(10) << playerMatch[j]
              << setw(10) << average[j]
+             << setw(10) << sixes[j]
+             << setw(10) << fours[j]
              << setw(12) << strikeRate[j]
              << endl;
     }
