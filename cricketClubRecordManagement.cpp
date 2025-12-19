@@ -14,8 +14,10 @@ using namespace std;
 // --------------------------------------------
 // globall arrays or variable
 long long int id[50] = {
-    201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222},
-              fee[50] = {4500, 5200, 3900, 6100, 4700, 5000, 4300, 4800, 5500, 4950, 5100, 4400, 5800, 4900, 6300, 4200, 5400, 6000, 4750, 5300, 3425, 3422};
+    201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222};
+long long int baseSalary[50] = {4500, 5200, 3900, 6100, 4700, 5000, 4300, 4800, 5500, 4950, 5100, 4400, 5800, 4900, 6300, 4200, 5400, 6000, 4750, 5300, 3425, 3422};
+
+long long netSalary[50] = {4050, 4680, 3510, 5490, 4230, 4500, 3870, 4320, 4950, 4455, 4590, 3960, 5220, 4410, 5670, 3780, 4860, 5400, 4275, 4770, 3082, 3080};
 
 string playerName[50] = {
     "Nabeel", "Shahzad", "Talha", "Rehan", "Sufyan",
@@ -42,7 +44,7 @@ int playerMatch[50] = {10, 5, 12, 8, 15, 3, 7, 10, 4, 6, 18, 6, 14, 9, 20, 5, 11
     runs[50] = {250, 320, 410, 70, 600, 55, 160, 300, 15, 100, 750, 45, 520, 120, 1050, 30, 350, 480, 80, 650, 342, 456};
 float strikeRate[50] = {138.89, 213.33, 170.83, 116.67, 200.00, 110.00, 133.33, 157.89, 150.00, 105.26, 214.29, 90.00, 160.00, 105.26, 184.86, 75.00, 125.00, 150.00, 95.24, 140.00, 109.90, 134.00}, average[50] = {31.25, 106.67, 37.27, 14.00, 50.00, 27.50, 26.67, 33.33, 15.00, 25.00, 46.88, 11.25, 52.00, 15.00, 58.33, 10.00, 50.00, 40.00, 13.33, 43.33, 55.11, 34.00};
 
-int idx = 20, team1[50] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, team2[50] = {12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22}, team3[50], team4[50], teamCount1 = 11, teamCount2 = 11, teamCount3 = 0, teamCount4 = 0;
+int idx = 22, team1[50] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, team2[50] = {12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22}, team3[50], team4[50], teamCount1 = 11, teamCount2 = 11, teamCount3 = 0, teamCount4 = 0;
 
 // Team Name variable
 string teamNames[4] = {"Golden", "Silver"};
@@ -63,7 +65,7 @@ void viewData();
 void viewDataWithoutGetch();
 bool updateData();
 void searchData();
-long long calculateFee();
+long long calculateSalary();
 void teamMake();
 int handlePause();
 string numValidation(string userInput);
@@ -94,6 +96,8 @@ void viewAdmins();
 void viewUsers();
 void gotoxy(int x, int y);
 bool updateMatch();
+bool isIdValid(long long temporaryId);
+void deleteIfPlayer(int index, int delPlayer);
 // --------------------------------------------------
 bool SignUp(string uN, string uP, string uR);
 string SignIn(string uN, string uP);
@@ -323,7 +327,7 @@ void adminInterface()
         else if (option == 6)
         {
             displayTitle();
-            cout << "Total fee is : " << calculateFee();
+            cout << "Total Salary is : " << calculateSalary();
             handlePause();
         }
         else if (option == 7)
@@ -595,7 +599,7 @@ int adminMenu()
     cout << "Enter 3  for data delete\n";
     cout << "Enter 4  for update player data\n";
     cout << "Enter 5  for search player profile\n";
-    cout << "Enter 6  for total fee\n";
+    cout << "Enter 6  for total salary\n";
     cout << "Enter 7  for team selection\n";
     cout << "Enter 8  for view team members\n";
     cout << "Enter 9  to update player's stats\n";
@@ -699,8 +703,15 @@ bool registration()
         string tempId;
         cout << "Enter id: ";
         cin >> tempId;
-
-        id[idx] = stoll(numValidation(tempId));
+        long long temp = stoll(numValidation(tempId));
+        while (isIdValid(temp))
+        {
+            cout << "This ID is already exist, you can not enter this player." << endl;
+            cout << "Enter id: ";
+            cin >> tempId;
+            temp = stoll(numValidation(tempId));
+        }
+        id[idx] = temp;
         // ====================================================================
 
         string tempCnic;
@@ -712,11 +723,21 @@ bool registration()
         string tempfee;
         cout << "Enter fee: ";
         cin >> tempfee;
-        fee[idx] = stoll(numValidation(tempfee));
+        baseSalary[idx] = stoll(numValidation(tempfee));
+        netSalary[idx] = baseSalary[idx];
         idx++;
         loopControl++;
     }
     return true;
+}
+bool isIdValid(long long temporaryId)
+{
+    for (int s = 0; s < idx; s++)
+    {
+        if (id[s] == temporaryId)
+            return true;
+    }
+    return false;
 }
 string validationForCnic(string userInputCnic)
 {
@@ -763,9 +784,10 @@ void viewData()
     cout << std::setw(6) << "Index"
          << std::setw(8) << "ID"
          << std::setw(15) << "Name"
-         << std::setw(15) << "FatherName"
+         << std::setw(15) << "Father"
          << std::setw(15) << "CNIC"
-         << "Fee" << "\n";
+         << setw(15) << "BaseSalary"
+         << setw(15) << "NetSalary" << endl;
     cout << "----------------------------------------------------------------------------------------\n";
 
     for (int i = 0; i < idx; i++)
@@ -776,7 +798,8 @@ void viewData()
              << std::setw(15) << playerName[i]
              << std::setw(15) << fatherName[i]
              << std::setw(15) << cnic[i]
-             << fee[i] << endl;
+             << setw(15) << baseSalary[i]
+             << setw(15) << netSalary[i] << endl;
         screenIndex++;
     }
     cout << "----------------------------------------------------------------------------------------" << endl;
@@ -799,7 +822,8 @@ void viewDataWithoutGetch()
          << std::setw(15) << "Name"
          << std::setw(15) << "FatherName"
          << std::setw(15) << "CNIC"
-         << "Fee" << "\n";
+         << "BaseSalary"
+         << "NetSalary" << "\n";
     cout << "----------------------------------------------------------------------------------------\n";
 
     for (int i = 0; i < idx; i++)
@@ -810,7 +834,8 @@ void viewDataWithoutGetch()
              << std::setw(15) << playerName[i]
              << std::setw(15) << fatherName[i]
              << std::setw(15) << cnic[i]
-             << fee[i] << endl;
+             << baseSalary[i]
+             << netSalary[i] << endl;
         screenIndex++;
     }
     cout << "----------------------------------------------------------------------------------------" << endl;
@@ -832,39 +857,71 @@ bool deleteData()
         cout << "Invalid index! Cannot delete." << endl;
         return false;
     }
-    for (int i = 0; i < idx; i++)
+    char choice='0';
+    while (true)
     {
-        if (indexToDelete == team1[i])
+
+        for (int i = 0; i < idx; i++)
         {
-            char choice;
-            cout << "This player is a part of a team ,are you sure you want to delete?(y/n):" << endl;
-            cin >> choice;
+            if (indexToDelete == team1[i] || indexToDelete == team2[i]|| indexToDelete == team3[i] || indexToDelete == team4[i])
+            {
+
+                cout << "This player is a part of a team ,are you sure you want to delete?(y/n):" << endl;
+                cin >> choice;
+                break;
+            }
+        }
+        if (choice=='0')
+        {
+            break;
+        }
+        
+        if (choice == 'y' || choice == 'Y')
+        {
+
+            // Shifting elements to fill the gap left by the deleted record
+            deleteIfPlayer(indexToDelete);
+            // -----------------------------------------------------------
+            idx--;
+            return true;
+        }
+        
+        else if (choice == 'N' || choice == 'n')
+        {
+            return false;
+        }
+        else
+        {
+            cout << "Invalid Input";
         }
     }
-
-    // Shifting elements to fill the gap left by the deleted record
-    for (int j = indexToDelete; j < idx - 1; j++)
-    {
-        playerName[j] = playerName[j + 1];
-        fatherName[j] = fatherName[j + 1];
-        id[j] = id[j + 1];
-        cnic[j] = cnic[j + 1];
-        fee[j] = fee[j + 1];
-        strikeRate[j] = strikeRate[j + 1];
-        runs[j] = runs[j + 1];
-        ballFaced[j] = ballFaced[j + 1];
-        average[j] = average[j + 1];
-        fifties[j] = fifties[j + 1];
-        fours[j] = fours[j + 1];
-        centuries[j] = centuries[j + 1];
-        sixes[j] = sixes[j + 1];
-        playerMatch[j] = playerMatch[j + 1];
-        dismissles[j] = dismissles[j + 1];
-    }
-    // -----------------------------------------------------------
-    idx--;
-    return true;
+    deleteIfPlayer(indexToDelete);
+            // -----------------------------------------------------------
+            idx--;
+            return true;
 }
+void deleteIfPlayer( int delPlayer)
+        {
+            for (int j = delPlayer; j < idx - 1; j++)
+            {
+                playerName[j] = playerName[j + 1];
+                fatherName[j] = fatherName[j + 1];
+                id[j] = id[j + 1];
+                cnic[j] = cnic[j + 1];
+                baseSalary[j] = baseSalary[j + 1];
+                netSalary[j] = netSalary[j + 1];
+                strikeRate[j] = strikeRate[j + 1];
+                runs[j] = runs[j + 1];
+                ballFaced[j] = ballFaced[j + 1];
+                average[j] = average[j + 1];
+                fifties[j] = fifties[j + 1];
+                fours[j] = fours[j + 1];
+                centuries[j] = centuries[j + 1];
+                sixes[j] = sixes[j + 1];
+                playerMatch[j] = playerMatch[j + 1];
+                dismissles[j] = dismissles[j + 1];
+            }
+        }
 bool updateData()
 
 {
@@ -908,7 +965,7 @@ bool updateData()
     string tempfee;
     cout << "Enter new fee: ";
     cin >> tempfee;
-    fee[indexToUpdate] = stoll(numValidation(tempfee));
+    baseSalary[indexToUpdate] = stoll(numValidation(tempfee));
     // ----------------------------------------------------------------------
 
     return true;
@@ -938,8 +995,9 @@ void searchData()
     cout << setw(lableWidthBio) << "Father Name: " << fatherName[searchIndex - 1] << endl;
     cout << setw(lableWidthBio) << "ID: " << id[searchIndex - 1] << endl;
     cout << setw(lableWidthBio) << "CNIC: " << cnic[searchIndex - 1] << endl;
-    cout << setw(lableWidthBio) << "Fee: " << fee[searchIndex - 1] << endl
-         << endl;
+    cout << setw(lableWidthBio) << "BaseSlary: " << baseSalary[searchIndex - 1] << endl;
+    cout << setw(lableWidthBio) << "NetSalary: " << netSalary[searchIndex - 1] << endl;
+    cout << endl;
     cout << "=============== PLAYER'S STATS =====================" << endl;
     cout << setw(lableWidthStats) << "Player Matches: " << playerMatch[searchIndex - 1] << endl;
     cout << setw(lableWidthStats) << "Ball Faced: " << ballFaced[searchIndex - 1] << endl;
@@ -955,12 +1013,12 @@ void searchData()
     handlePause();
 }
 
-long long calculateFee()
+long long calculateSalary()
 {
     long long sum = 0;
     for (int i = 0; i < idx; i++)
     {
-        sum += fee[i];
+        sum += baseSalary[i];
     }
     return sum;
 }
@@ -982,19 +1040,25 @@ void teamMake()
     cout << "Team 2 team is: " << teamNames[1] << endl;
 
     char tempvar;
+    int a = 2;
     for (int i = 2; i < 4; i++)
     {
         cout << "Want to make more team?(y/n)" << endl;
         cin >> tempvar;
         if (tempvar == 'y')
         {
-            cout << "Enter name of team " << i + 1 << ": ";
+            cout << "Enter name of team " << a + 1 << ": ";
             cin >> teamNames[i];
         }
-        else
+        else if (tempvar == 'n')
         {
             cout << "No problem" << endl;
             break;
+        }
+        else
+        {
+            cout << "Invalid Input" << endl;
+            return;
         }
     }
     cout << " ---------------------------------------------------" << endl;
@@ -1130,34 +1194,31 @@ void teamSelection1()
             cout << "Enter index of player whom you want to add in team.";
             cin >> tempPlayerIndex;
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
-            for (int i = 0; i < teamCount2; i++)
+            for (int j = 0; j < teamCount2; j++)
             {
-                if (tempPlayer - 1 == team2[i])
+                if (tempPlayer - 1 == team2[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount3; i++)
+            for (int j = 0; j < teamCount3; j++)
             {
-                if (tempPlayer - 1 == team3[i])
+                if (tempPlayer - 1 == team3[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount4; i++)
+            for (int j = 0; j < teamCount4; j++)
             {
-                if (tempPlayer - 1 == team4[i])
+                if (tempPlayer - 1 == team4[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
 
@@ -1213,38 +1274,37 @@ void teamSelection2()
             cout << "Enter index of player whom you want to add in team.";
             cin >> tempPlayerIndex;
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
-            for (int i = 0; i < teamCount1; i++)
+            for (int j = 0; j < teamCount1; j++)
             {
-                if (tempPlayer - 1 == team1[i])
+                if (tempPlayer - 1 == team1[j])
                 {
                     cout << "We can not enter this player" << endl;
-                    cout << "**************This player is already a part of team2**************" << endl;
-                    handlePause();
+                    cout << "**************This player is already a part of team1**************" << endl;
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount3; i++)
+            for (int j = 0; j < teamCount3; j++)
             {
-                if (tempPlayer - 1 == team3[i])
+                if (tempPlayer - 1 == team3[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
-                    handlePause();
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount4; i++)
+            for (int j = 0; j < teamCount4; j++)
             {
-                if (tempPlayer - 1 == team4[i])
+                if (tempPlayer - 1 == team4[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
-                    handlePause();
+                    isDuplicate = true;
                 }
             }
 
             for (int j = 0; j < teamCount2; j++)
             {
 
-                // whole mess is just about one this dirty -1 ,duffer
                 if (tempPlayer - 1 == team2[j])
                 {
                     isDuplicate = true;
@@ -1268,6 +1328,7 @@ void teamSelection2()
 }
 void teamSelection3()
 {
+
     if (teamCount3 == 11)
     {
         char option;
@@ -1294,39 +1355,37 @@ void teamSelection3()
             cout << "Enter index of player whom you want to add in team.";
             cin >> tempPlayerIndex;
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
-            for (int i = 0; i < teamCount1; i++)
+            for (int j = 0; j < teamCount1; j++)
             {
-                if (tempPlayer - 1 == team1[i])
+                if (tempPlayer - 1 == team1[j])
+                {
+                    cout << "We can not enter this player" << endl;
+                    cout << "**************This player is already a part of team1**************" << endl;
+                    isDuplicate = true;
+                }
+            }
+            for (int j = 0; j < teamCount2; j++)
+            {
+                if (tempPlayer - 1 == team2[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount2; i++)
+            for (int j = 0; j < teamCount4; j++)
             {
-                if (tempPlayer - 1 == team2[i])
-                {
-                    cout << "We can not enter this player" << endl;
-                    cout << "**************This player is already a part of team3**************" << endl;
-                    handlePause();
-                    return;
-                }
-            }
-            for (int i = 0; i < teamCount4; i++)
-            {
-                if (tempPlayer - 1 == team4[i])
+                if (tempPlayer - 1 == team4[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team4**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
 
             for (int j = 0; j < teamCount3; j++)
             {
+
                 if (tempPlayer - 1 == team3[j])
                 {
                     isDuplicate = true;
@@ -1348,8 +1407,10 @@ void teamSelection3()
         }
     }
 }
+
 void teamSelection4()
 {
+
     if (teamCount4 == 11)
     {
         char option;
@@ -1376,38 +1437,37 @@ void teamSelection4()
             cout << "Enter index of player whom you want to add in team.";
             cin >> tempPlayerIndex;
             tempPlayer = checkIndexForTeam(tempPlayerIndex);
-            for (int i = 0; i < teamCount1; i++)
+            for (int j = 0; j < teamCount1; j++)
             {
-                if (tempPlayer - 1 == team1[i])
+                if (tempPlayer - 1 == team1[j])
+                {
+                    cout << "We can not enter this player" << endl;
+                    cout << "**************This player is already a part of team1**************" << endl;
+                    isDuplicate = true;
+                }
+            }
+            for (int j = 0; j < teamCount2; j++)
+            {
+                if (tempPlayer - 1 == team2[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team2**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount2; i++)
+            for (int j = 0; j < teamCount3; j++)
             {
-                if (tempPlayer - 1 == team2[i])
+                if (tempPlayer - 1 == team3[j])
                 {
                     cout << "We can not enter this player" << endl;
                     cout << "**************This player is already a part of team3**************" << endl;
-                    handlePause();
-                    return;
+                    isDuplicate = true;
                 }
             }
-            for (int i = 0; i < teamCount3; i++)
-            {
-                if (tempPlayer - 1 == team3[i])
-                {
-                    cout << "We can not enter this player" << endl;
-                    cout << "**************This player is already a part of team4**************" << endl;
-                    handlePause();
-                    return;
-                }
-            }
+
             for (int j = 0; j < teamCount4; j++)
             {
+
                 if (tempPlayer - 1 == team4[j])
                 {
                     isDuplicate = true;
@@ -1457,7 +1517,7 @@ void viewTeam1Members()
         cout << playerName[playerIndex]
              << " (ID: " << id[playerIndex]
              << ", CNIC: " << cnic[playerIndex]
-             << ", Fee: " << fee[playerIndex] << ")\n";
+             << ", Salary: " << baseSalary[playerIndex] << ")\n";
     }
 
     cout << "------------------------------------------------\n";
@@ -1491,7 +1551,7 @@ void viewTeam2Members()
         cout << playerName[playerIndex]
              << " (ID: " << id[playerIndex]
              << ", CNIC: " << cnic[playerIndex]
-             << ", Fee: " << fee[playerIndex] << ")\n";
+             << ", Salary: " << baseSalary[playerIndex] << ")\n";
     }
 
     cout << "------------------------------------------------\n";
@@ -1525,7 +1585,7 @@ void viewTeam3Members()
         cout << playerName[playerIndex]
              << " (ID: " << id[playerIndex]
              << ", CNIC: " << cnic[playerIndex]
-             << ", Fee: " << fee[playerIndex] << ")\n";
+             << ", Salary: " << baseSalary[playerIndex] << ")\n";
     }
 
     cout << "------------------------------------------------\n";
@@ -1559,7 +1619,7 @@ void viewTeam4Members()
         cout << playerName[playerIndex]
              << " (ID: " << id[playerIndex]
              << ", CNIC: " << cnic[playerIndex]
-             << ", Fee: " << fee[playerIndex] << ")\n";
+             << ", Salary: " << baseSalary[playerIndex] << ")\n";
     }
 
     cout << "------------------------------------------------\n";
@@ -1834,9 +1894,9 @@ void playerInAsynding()
             id[i] = id[maximumIndex];
             id[maximumIndex] = temp;
 
-            temp = fee[i];
-            fee[i] = fee[maximumIndex];
-            fee[maximumIndex] = temp;
+            temp = baseSalary[i];
+            baseSalary[i] = baseSalary[maximumIndex];
+            baseSalary[maximumIndex] = temp;
 
             temp = playerMatch[i];
             playerMatch[i] = playerMatch[maximumIndex];
@@ -1917,9 +1977,9 @@ void playerInDesynding()
             id[i] = id[maximumIndex];
             id[maximumIndex] = temp;
 
-            temp = fee[i];
-            fee[i] = fee[maximumIndex];
-            fee[maximumIndex] = temp;
+            temp = baseSalary[i];
+            baseSalary[i] = baseSalary[maximumIndex];
+            baseSalary[maximumIndex] = temp;
 
             temp = playerMatch[i];
             playerMatch[i] = playerMatch[maximumIndex];
@@ -2103,4 +2163,35 @@ void viewUsers()
         cout << endl;
     }
     handlePause();
+}
+void manageSalaryBonus()
+{
+    char op;
+    float bonusPercent;
+    for (int i = 0; i < idx; i++)
+    {
+        cout << "Player: " << playerName[i] << " (Base Salary: " << baseSalary[i] << ")" << endl;
+        cout << "Want to give bonus?(y/n): ";
+        cin >> op;
+        if (op == 'y' || op == 'Y')
+        {
+            cout << "How many percent you want to gave bonus:  " << endl;
+            cin >> bonusPercent;
+            netSalary[i] = baseSalary[i] + baseSalary[i] * (bonusPercent / 100.0);
+            cout << "Discount is given." << endl;
+        }
+        else if (op == 'n' || op == 'N')
+        {
+            netSalary[i] = baseSalary[i];
+            cout << "No Bonus is given" << endl;
+        }
+        else
+        {
+            cout << "Invalid input.Enter again: " << endl;
+            i--;
+        }
+    }
+    cout << "------------------------------------------" << endl;
+    cout << "All salaries updated successfully!" << endl;
+    cout << "------------------------------------------" << endl;
 }
