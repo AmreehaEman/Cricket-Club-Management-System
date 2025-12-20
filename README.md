@@ -1,48 +1,46 @@
-# Cricket-Club-Management-System
-A procedural C++ console application designed for a Cricket Club Record Management System. It features role-based access control (Admin/User), full CRUD operations (Create, View, Update, Delete) for player biodata, detailed player statistics tracking (average, strike rate, runs), and unique team selection logic for up to four teams.
-
 # 🏏 Cricket Club Record Management System (CCRMS)
 
-## ⭐ Project Overview
+A procedural C++ console application designed for a Cricket Club Record Management System. It features role-based access control, full CRUD operations for player biodata, and detailed statistics tracking.
 
-The Cricket Club Record Management System (CCRMS) is a robust, console-based C++ application designed to manage the critical data and statistics of a cricket club. It serves as a single source of truth for all player information, ensuring data integrity and streamlined operations for club management.
+## ⭐ Project Overview
+The CCRMS is a robust, console-based C++ application designed to manage the critical data and statistics of a cricket club. It serves as a single source of truth for all player information, ensuring data integrity and streamlined operations for club management.
 
 ## 🚀 Key Features
+* **Secure Access Control:** Layered security with Admin and User roles.
+* **Data Validation:** Rigorous checks for unique IDs, CNICs, and password complexity.
+* **Full CRUD Functionality:** Create, Read, Update, and Delete player records.
+* **Advanced Team Allocation:** Logic to manage up to four teams without player duplication.
+* **Detailed Reporting:** Tabular outputs for rosters and match history.
 
-This application goes beyond simple data entry, providing essential tools for club administration:
+## 🛠 Development Evolution & Constraints
+As a first-semester BSCS student, I built this project to master fundamental programming logic. The project underwent a significant structural evolution to improve code quality.
 
-* **Secure Access Control:** Implements a layered security model with distinct **Admin** and **User** roles to control sensitive actions (like player deletion and data modification).
-* **Comprehensive Data Validation:** Includes rigorous checks for unique player IDs, CNIC numbers, and ensures all statistical inputs are valid to prevent database corruption.
-* **Full CRUD Functionality:** Supports creation, retrieval, updating, and deletion of player records and statistics.
-* **Advanced Team Allocation Logic:** Features specific functionality to manage team membership for up to four distinct teams, ensuring a player cannot be assigned to multiple teams simultaneously.
-* **Detailed Reporting:** Provides organized, tabular outputs to display the entire roster, individual player reports, and current team line-ups.
+### **Phase 1: Global Logic (Original)**
+* **Constraints:** Built using **Global Parallel Arrays**.
+* **Learning Outcome:** Understood how data flows in a basic procedural program, but recognized that global variables make the code "fragile" and harder to maintain.
 
-## ⚙️ Current Technical Structure
+### **Phase 2: Refactored Modular Structure (Current)**
+* **Constraints:** Strictly **No Classes**, and **No Vectors**.
+* **Technical Improvements:**
+    * **Local Scope:** All data is declared within `main()` for better memory safety.
+    * **Pass-by-Reference:** Functions communicate using memory references (`&`), reducing overhead.
+    * **Array Passing:** Data is passed to modular functions as parameters, making the code cleaner and more professional.
 
-The CCRMS is currently built upon foundational programming concepts taught in early computer science:
+## ⚙️ Technical Specification
+| Component | Implementation |
+| :--- | :--- |
+| **Data Storage** | Local Parallel Arrays (e.g., `playerName[]`, `id[]`) |
+| **Data Flow** | **Pass-by-Reference** and Function Parameters |
+| **UI/UX** | Console-based with `<windows.h>` for `gotoxy()` layout control |
+| **Validation** | Custom logic for numeric and string data integrity |
 
-| Component | Description | Technical Implementation |
-| :--- | :--- | :--- |
-| **Data Storage** | Stores all player attributes (name, runs, fees, etc.). | **Global Parallel Arrays** (e.g., separate arrays for `playerName[]`, `runs[]`, `fee[]`). |
-| **Program Logic** | Handles user input, feature execution, and data modification. | **Modular Functions** (e.g., `registration()`, `searchData()`) utilizing procedural flow. |
-| **Platform** | Optimized for running in a specific environment. | Relies on the `<windows.h>` library for specific console operations. |
+## 💡 Future Roadmap (Leveling Up)
+* **OOP Redesign:** Implementing **Classes and Structs** to encapsulate player data.
+* **Dynamic Storage:** Moving from fixed arrays to `std::vector` for unlimited entries.
+* **Data Persistence:** Adding **File Handling** (`fstream`) to save data permanently.
 
-## 💡 Future Implementations (OOP & Scalability)
-
-The immediate roadmap for this application focuses on transitioning from a procedural design to a modern **Object-Oriented Programming (OOP)** structure for improved scalability and maintainability.
-
-* **Object-Oriented Redesign:** **Classes and Structures** will be implemented to encapsulate player data and related methods into a single, cohesive unit (`Player` class), replacing the use of parallel arrays.
-* **Dynamic Storage:** Migration from fixed-size arrays to the `std::vector` container to allow the club roster to grow dynamically without a fixed size limit.
-* **Data Persistence:** Implementation of **File Handling** to ensure player data is saved and loaded, allowing the system to retain information after the program is closed.
-
----
-# ▶️ How to Run the Application
-
-This is a console-based C++ application requiring compilation via `g++` or a similar C++ compiler.
-
-**Platform Note:**
-
-* The program relies on the `<windows.h>` library for console manipulation features.
-* **It is optimized and intended for use in a Windows environment.**
-* Users on Linux or macOS environments must replace or abstract the `<windows.h>` calls (e.g., using platform-agnostic libraries like `unistd.h` for `sleep()` functionality) to successfully compile and execute the code.
----
+## ▶️ How to Run
+1. Ensure you are on a **Windows** environment (required for `<windows.h>`).
+2. Compile using a C++ compiler (like MinGW/g++):
+   ```bash
+   g++ cricketClubRecordManagement.cpp -o CCRMS.exe
